@@ -6,6 +6,14 @@
     @vite('resources/css/profile.css')
 @endpush
 
+@php
+    $profiles = [
+        'aggressive' => 'Agressivo',
+        'moderate' => 'Moderado',
+        'conservative' => 'Conservador',
+    ];
+@endphp
+
 @push('content')
 <div id="personal" class="content-section active">
     <h2 class="section-title">Informações Pessoais</h2>
@@ -18,6 +26,24 @@
             <div style="display: flex; align-items: center; gap: 10px;">
                 <input type="text" class="form-input" id="walletAddress" disabled readonly value="{{ auth()->user()->account }}">
                 <button type="button" class="copy-btn" onclick="copyToClipboard()"><i id="copyIcon" class="fa-solid fa-copy"></i></button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Perfil de investimento</label>
+            <div class="profile-selector">
+                @foreach ($profiles as $value => $label)
+                    <input
+                        type="radio"
+                        name="investment_profile"
+                        id="profile-{{ $value }}"
+                        value="{{ $value }}"
+                        class="profile-radio-input"
+                        @checked(auth()->user()->investment_profile === $value)
+                    >
+                    <label for="profile-{{ $value }}" class="profile-radio-label">
+                        {{ $label }}
+                    </label>
+                @endforeach
             </div>
         </div>
         <div class="form-group">

@@ -17,8 +17,10 @@ return new class extends Migration
             $table->foreignId('receiver_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('coin_id')->constrained('coins')->cascadeOnDelete();
             $table->decimal('amount', 20, 8)->default(0);
-            $table->enum('type', ['send', 'receive', 'buy', 'sell'])->default('send');
+            $table->enum('type', ['transfer', 'buy', 'withdraw'])->default('transfer');
             $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
+            $table->string('transaction')->nullable();
+            $table->string('before_transaction')->nullable();
             $table->timestamps();
         });
     }

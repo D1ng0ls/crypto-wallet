@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('investiment_profile', ['aggressive', 'moderate', 'conservative'])->default('moderate');
+            $table->enum('investment_profile', ['aggressive', 'moderate', 'conservative'])->default('moderate');
             $table->string('account');
         });
     }
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('investiment_profile');
+            $table->dropColumn('investment_profile');
             $table->dropColumn('account');
         });
     }

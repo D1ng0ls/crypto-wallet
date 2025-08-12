@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'investiment_profile',
+        'investment_profile',
         'account',
     ];
 

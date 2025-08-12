@@ -48,8 +48,8 @@
         <h3>Ações Rápidas</h3>
         <div class="action-buttons">
             <button class="action-btn" id="comprarCrypto">🔄 Comprar Crypto</button>
-            <button class="action-btn secondary">📤 Enviar</button>
-            <button class="action-btn secondary">📥 Sacar</button>
+            <button class="action-btn secondary" id="enviarCrypto">📤 Enviar</button>
+            <button class="action-btn secondary" id="sacarCrypto">📥 Sacar</button>
         </div>
     </div>
 
@@ -88,6 +88,54 @@
     </div>
 </div>
 
+<div class="hidden" id="modalTransfer">
+    <div class="modal-content">
+        <span class="close" id="closeModalTransfer">&times;</span>
+        <form method="POST" action="{{route('crypto.send')}}">
+            @csrf
+            <div>
+                <label for="coin">Moeda:</label>
+                <select class="form-input" name="coin" id="coin">
+                    @foreach ($coins as $coin)
+                        <option value="{{$coin->id}}">{{$coin->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="amount">Quantidade:</label>
+                <input class="form-input" type="number" name="amount" id="amount">
+            </div>
+            <div>
+                <label for="account">Conta de Destino:</label>
+                <input class="form-input" type="text" name="account" id="account">
+            </div>
+            <button class="action-btn" type="submit">Transferir</button>
+        </form>
+    </div>
+</div>
+
+<div class="hidden" id="modalSaque">
+    <div class="modal-content">
+        <span class="close" id="closeModalSaque">&times;</span>
+        <form method="POST" action="{{route('crypto.withdraw')}}">
+            @csrf
+            <div>
+                <label for="coin">Moeda:</label>
+                <select class="form-input" name="coin" id="coin">
+                    @foreach ($coins as $coin)
+                        <option value="{{$coin->id}}">{{$coin->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="amount">Quantidade:</label>
+                <input class="form-input" type="number" name="amount" id="amount">
+            </div>
+            <button class="action-btn" type="submit">Sacar</button>
+        </form>
+    </div>
+</div>
+
 <script>
     function numberFormat(number) {
         return number.toFixed(2).replace('.', ',');
@@ -108,6 +156,42 @@
             const modal = document.getElementById('modal');
             modal.classList.add('hidden');
             modal.classList.remove('modal');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const actionButtons = document.querySelectorAll('#enviarCrypto');
+        actionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = document.getElementById('modalTransfer');
+                modal.classList.add('modal');
+                modal.classList.remove('hidden');
+            });
+        });
+
+        const closeModalTransfer = document.getElementById('closeModalTransfer');
+        closeModalTransfer.addEventListener('click', function() {
+            const modalTransfer = document.getElementById('modalTransfer');
+            modalTransfer.classList.add('hidden');
+            modalTransfer.classList.remove('modal');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const actionButtons = document.querySelectorAll('#sacarCrypto');
+        actionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = document.getElementById('modalSaque');
+                modal.classList.add('modal');
+                modal.classList.remove('hidden');
+            });
+        });
+
+        const closeModalTransfer = document.getElementById('closeModalSaque');
+        closeModalTransfer.addEventListener('click', function() {
+            const modalTransfer = document.getElementById('modalSaque');
+            modalTransfer.classList.add('hidden');
+            modalTransfer.classList.remove('modal');
         });
     });
 </script>

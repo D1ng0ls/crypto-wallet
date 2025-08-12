@@ -18,11 +18,18 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
+            'investment_profile' => 'required|in:aggressive,moderate,conservative',
+        ], [
+            'name.required' => 'O nome é obrigatório.',
+            'email.required' => 'O email é obrigatório.',
+            'investment_profile.required' => 'O perfil de investimento é obrigatório.',
+            'investment_profile.in' => 'O perfil de investimento deve ser agressivo, moderado ou conservador.',
         ]);
 
         auth()->user()->update([
             'name' => $request->name,
             'email' => $request->email,
+            'investment_profile' => $request->investment_profile,
         ]);
         
         return redirect()->back()->with('success', 'Informações atualizadas com sucesso!');

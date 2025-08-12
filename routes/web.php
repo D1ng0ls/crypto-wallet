@@ -30,8 +30,8 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('crypto')->controller(WalletController::class)->group(function () {
         Route::post('/buy', [WalletController::class, 'buy'])->name('crypto.buy');
-        Route::post('/sell', [WalletController::class, 'sell'])->name('crypto.sell');
-        Route::post('/send/{user}', [WalletController::class, 'send'])->name('crypto.send');
+        Route::post('/send', [WalletController::class, 'transfer'])->name('crypto.send');
+        Route::post('/withdraw', [WalletController::class, 'withdraw'])->name('crypto.withdraw');
     });
 
     Route::prefix('profile')->controller(ProfileController::class)->group(function () {
