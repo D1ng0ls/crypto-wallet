@@ -18,6 +18,10 @@
         <div class="nav-icon">🔒</div>
         <span>Segurança</span>
     </div>
+    <div class="nav-item" onclick="showSection('notifications')">
+        <div class="nav-icon">🔔</div>
+        <span>Notificações</span>
+    </div>
     <div class="nav-item" onclick="showSection('activity')">
         <div class="nav-icon">📊</div>
         <span>Atividade</span>
@@ -30,16 +34,14 @@
 
 <script>
     function showSection(sectionId) {
-            // Remove active de todas as seções e nav items
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
 
-            // Ativa a seção selecionada
-            document.getElementById(sectionId).classList.add('active');
-            event.target.closest('.nav-item').classList.add('active');
-        }
+        document.getElementById(sectionId).classList.add('active');
+        event.target.closest('.nav-item').classList.add('active');
+    }
 </script>

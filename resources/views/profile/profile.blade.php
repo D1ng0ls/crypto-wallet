@@ -12,6 +12,12 @@
         'moderate' => 'Moderado',
         'conservative' => 'Conservador',
     ];
+
+    $types = [
+        'buy' => 'Depósito',
+        'withdraw' => 'Saque',
+        'transfer' => 'Transferência',
+    ];
 @endphp
 
 @push('content')
@@ -83,12 +89,30 @@
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
     </form>
 </div>
+<div id="notifications" class="content-section hidden">
+    <h2 class="section-title">Notificações</h2>
+    
+    <div class="notifications-grid">
+        @forelse (auth()->user()->notifications as $notification)
+            <div class="notification-card">
+                <div class="notification-icon">🔔</div>
+                <div class="notification-content">
+                    <p style="font-weight: bold;">{{ $types[$notification->data['type']] }}</p>
+                    <p style="font-size: 14px;">{{ $notification->data['message'] }}</p>
+                </div>
+                <div class="notification-timestamp">{{ $notification->created_at->format('d/m/Y H:i') }}</div>
+            </div>
+        @empty
+            <p style="opacity: 0.7; text-align: center;">Nenhuma notificação recente.</p>
+        @endforelse
+    </div>
+</div>
 <div id="activity" class="content-section">
     <h2 class="section-title">Estatísticas da Conta</h2>
     
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-value">247</div>
+            <div class="stat-value">{{ auth()->user()->senderTransactions()->count() + auth()->user()->receiverTransactions()->count() }}</div>
             <div class="stat-label">Transações</div>
         </div>
         <div class="stat-card">
@@ -97,9 +121,29 @@
         </div>
     </div>
 
-    <h3 style="margin-bottom: 20px;">Atividade Recente</h3>
+    <h2 class="section-title">Atividade Recente</h2>
     <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 20px;">
-        <p style="opacity: 0.7; text-align: center;">Histórico detalhado de atividades será exibido aqui</p>
+        @php 
+            $senderTransactions = auth()->user()->senderTransactions()->get();
+
+            $receiverTransactions = auth()->user()->receiverTransactions()->get();
+
+            $transactions = $senderTransactions->merge($receiverTransactions)->sortBy('created_at')
+        @endphp
+        @forelse ($transactions as $transaction)
+            <div class="transaction-card">
+                <div class="transaction-info">
+                    <div class="transaction-type">{{ $transaction->type }}</div>
+                    <div class="transaction-amount">{{ $transaction->amount }}</div>
+                </div>
+                <div class="transaction-details">
+                    <div class="transaction-coin">{{ $transaction->coin->name }}</div>
+                    <div class="transaction-timestamp">{{ $transaction->created_at->format('d/m/Y H:i') }}</div>
+                </div>
+            </div>
+        @empty
+            <p style="opacity: 0.7; text-align: center;">Nenhuma transação recente.</p>
+        @endforelse
     </div>
 </div>
 <div id="support" class="content-section">
