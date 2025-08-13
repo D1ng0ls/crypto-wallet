@@ -2,7 +2,7 @@
 
 <header>
     <div class="logo"><a href="{{ route('dashboard') }}">🚀 CryptoWallet</a></div>
-    <div class="user-profile-header">
+    <div class="">
         <span>{{ auth()->user()->name }}</span>
         <div class="profile-avatar-header" id="initials" data-name="{{ auth()->user()->name }}"></div>
 
@@ -18,7 +18,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const popupProfile = document.getElementById('popupProfile');
-        const profileAvatar = document.querySelector('.profile-avatar-header');
+        const profileAvatar = document.querySelector('.user-profile-header');
 
         profileAvatar.addEventListener('click', function() {
             popupProfile.classList.remove('hidden');
