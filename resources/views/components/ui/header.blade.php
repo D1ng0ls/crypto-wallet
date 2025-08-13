@@ -2,7 +2,7 @@
 
 <header>
     <div class="logo"><a href="{{ route('dashboard') }}">🚀 CryptoWallet</a></div>
-    <div class="">
+    <div class="user-profile-header">
         <span>{{ auth()->user()->name }}</span>
         <div class="profile-avatar-header" id="initials" data-name="{{ auth()->user()->name }}"></div>
 
