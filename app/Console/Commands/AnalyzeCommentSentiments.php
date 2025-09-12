@@ -56,13 +56,13 @@ class AnalyzeCommentSentiments extends Command
 
         $scriptPath = storage_path('app/scripts/sentiment_analyzer.py');
         $result = Process::run([
-            'python3', // Usando 'py' para garantir a compatibilidade com o Windows
+            'python3',
             $scriptPath,
             $pendingComments->toJson()
         ]);
 
         if (!$result->successful()) {
-            $this->error('O script de análise da IA falhou.');
+            $this->error('O script de análise da IA falhou: ' . $result->errorOutput());
             Log::error('Falha ao executar script de sentimentos', ['error' => $result->errorOutput()]);
             return;
         }
