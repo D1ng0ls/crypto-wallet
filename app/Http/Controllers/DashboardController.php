@@ -53,7 +53,7 @@ class DashboardController extends Controller
             $scriptPath = storage_path('app/scripts/recommend_coins.py');
 
             $result = Process::run([
-                'python',
+                'python3',
                 $scriptPath,
                 $userProfile,
                 $userBalances->toJson(),

@@ -56,7 +56,7 @@ class AnalyzeCommentSentiments extends Command
 
         $scriptPath = storage_path('app/scripts/sentiment_analyzer.py');
         $result = Process::run([
-            'py', // Usando 'py' para garantir a compatibilidade com o Windows
+            'python3', // Usando 'py' para garantir a compatibilidade com o Windows
             $scriptPath,
             $pendingComments->toJson()
         ]);
